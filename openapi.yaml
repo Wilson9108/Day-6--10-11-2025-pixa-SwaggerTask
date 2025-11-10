@@ -1,0 +1,124 @@
+openapi: 3.1.0
+info:
+  title: simple api
+  version: 1.0.0
+  description: This api returns the crud operations of users
+
+paths:
+  /:
+    get:
+      sumamry: simple text
+      description:  this route returns the hello world
+      responses:
+        "200":
+          description: a simple hello world
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: hello world
+
+
+  /api/user:
+    get:
+      summary: Returns Hello world message
+      description: This Route returns the users data.
+      responses:
+        '200':  
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: wilson
+                    email:
+                      type: string
+                      example: wilson@gmail.com  
+
+  /api/user/create:
+    post:
+      summary: Create New User
+      description: Insert a new user into the database
+      requestBody :
+        required: true
+        content: 
+          application/json: 
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: wilson
+                email: 
+                  type: string
+                  example: wilson@gmail.com
+      responses:
+        "201":
+          description: user created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messsage:
+                    type: string
+                    example: User created successfully
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: wilson
+                    email:
+                      type: string
+                      example: wilson@gmail.com
+  
+  /api/user/update/user/{id}:
+    put:
+      summary: update user by id
+      description: updates an existing users info using their unique id 
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: the Id of the user to update
+          schema:
+            type: string
+            example: 65656565566556
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: updating wilson
+                email:
+                  type: string
+                  example: wilson@gmail.com
+    responses:
+      '200':
+        description:: User updated successfully
+
+  /api/user/delete/user/{id}:
+    delete:
+      summary: Delete user BY ID
+      description: Deletes a user from the database using their unique ID
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          description: the ID of the user to delete
+          schema:
+            type: string
+            example: 65656565566556
+      responses:
+        '200':
+          description: user deleted successfully

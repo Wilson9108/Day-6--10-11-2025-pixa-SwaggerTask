@@ -1,0 +1,16 @@
+wilson : 
+  name : wilson
+
+paths:
+  /api/user:
+    get:
+      summary: Returns Hello world message
+      description: This Route just returns a simple hello world test.
+      responses:
+        '200':  
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type:string
+                example:Hello world
