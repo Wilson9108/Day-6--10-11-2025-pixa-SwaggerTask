@@ -7,6 +7,8 @@ info:
 paths:
   /:
     get:
+      tags:
+        - User CRUD
       sumamry: simple text
       description:  this route returns the hello world
       responses:
@@ -18,9 +20,10 @@ paths:
                 type: string
                 example: hello world
 
-
   /api/user:
     get:
+      tags:
+        - User CRUD
       summary: Returns Hello world message
       description: This Route returns the users data.
       responses:
@@ -42,6 +45,8 @@ paths:
 
   /api/user/create:
     post:
+      tags:
+        - User CRUD
       summary: Create New User
       description: Insert a new user into the database
       requestBody :
@@ -80,6 +85,8 @@ paths:
   
   /api/user/update/user/{id}:
     put:
+      tags:
+        - User CRUD
       summary: update user by id
       description: updates an existing users info using their unique id 
       parameters:
@@ -109,6 +116,8 @@ paths:
 
   /api/user/delete/user/{id}:
     delete:
+      tags:
+        - User CRUD
       summary: Delete user BY ID
       description: Deletes a user from the database using their unique ID
       parameters:

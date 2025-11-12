@@ -9,3 +9,4 @@ userRouter.put('/update/user/:id',updateUser)
 userRouter.delete('/delete/user/:id',deleteUser)
 
 module.exports={userRouter}
+
