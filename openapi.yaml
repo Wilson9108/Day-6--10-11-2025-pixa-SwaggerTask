@@ -1,103 +1,68 @@
 openapi: 3.1.0
 info:
-  title: simple api
+  title: User CRUD API
   version: 1.0.0
-  description: This api returns the crud operations of users
+  description: API documentation for User creation, update, delete and get all users.
+
+servers:
+  - url: http://localhost:5000/api
 
 paths:
-  /:
-    get:
+  /user:
+    post:
+      summary: Create a new user
       tags:
-        - User CRUD
-      sumamry: simple text
-      description:  this route returns the hello world
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+      responses:
+        "201":
+          description: User Created Successfully
+        "400":
+          description: User Not Creation
+        "500":
+          description: Internal Server Error
+
+    get:
+      summary: Get all users
+      tags:
+        - User
       responses:
         "200":
-          description: a simple hello world
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: hello world
-
-  /api/user:
-    get:
-      tags:
-        - User CRUD
-      summary: Returns Hello world message
-      description: This Route returns the users data.
-      responses:
-        '200':  
-          description: Successful response
+          description: List of users
           content:
             application/json:
               schema:
                 type: array
-                items: 
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      example: wilson
-                    email:
-                      type: string
-                      example: wilson@gmail.com  
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
+          description: Internal Server Error
 
-  /api/user/create:
-    post:
-      tags:
-        - User CRUD
-      summary: Create New User
-      description: Insert a new user into the database
-      requestBody :
-        required: true
-        content: 
-          application/json: 
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: wilson
-                email: 
-                  type: string
-                  example: wilson@gmail.com
-      responses:
-        "201":
-          description: user created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  messsage:
-                    type: string
-                    example: User created successfully
-                user:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      example: wilson
-                    email:
-                      type: string
-                      example: wilson@gmail.com
-  
-  /api/user/update/user/{id}:
+  /user/{id}:
     put:
+      summary: Update user by ID
       tags:
-        - User CRUD
-      summary: update user by id
-      description: updates an existing users info using their unique id 
+        - User
       parameters:
-        - name: id
-          in: path
+        - in: path
+          name: id
           required: true
-          description: the Id of the user to update
           schema:
             type: string
-            example: 65656565566556
-      requestBody: 
+      requestBody:
         required: true
         content:
           application/json:
@@ -106,28 +71,42 @@ paths:
               properties:
                 name:
                   type: string
-                  example: updating wilson
                 email:
                   type: string
-                  example: wilson@gmail.com
-    responses:
-      '200':
-        description:: User updated successfully
+      responses:
+        "200":
+          description: User is Updated
+        "400":
+          description: User is not updated
+        "500":
+          description: Internal Server Error
 
-  /api/user/delete/user/{id}:
     delete:
+      summary: Delete user by ID
       tags:
-        - User CRUD
-      summary: Delete user BY ID
-      description: Deletes a user from the database using their unique ID
+        - User
       parameters:
-        - name: Id
-          in: path
+        - in: path
+          name: id
           required: true
-          description: the ID of the user to delete
           schema:
             type: string
-            example: 65656565566556
       responses:
-        '200':
-          description: user deleted successfully
+        "200":
+          description: User is Deleted
+        "400":
+          description: user is not Deleted
+        "500":
+          description: Internal Server Error
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
